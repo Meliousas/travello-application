@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class AccountTest {
     MockMvc mockMvc;
 
     @Test
-    public void createAccount() throws Exception {
+    public void shouldCreateAccount() throws Exception {
         Account account = new Account("user", "password");
 
         this.mockMvc
@@ -40,19 +41,27 @@ public class AccountTest {
     }
 
     @Test
-    public void getAllAccounts() throws Exception {
+    public void shouldGetAccountById() throws Exception{
+        this.mockMvc
+                .perform(get("/api/account/0"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+    }
+
+    @Test
+    public void shouldGetAllAccounts() throws Exception {
         Account account = new Account("firstUser", "firstPass");
         Account account2 = new Account("secondUser", "secondPass");
 
         List<Account> accounts = Arrays.asList(account, account2);
-        createMultipleAccounts(accounts);
+        createAccounts(accounts);
 
         mockMvc.perform(get("/api/account/getAll"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
-    private void createMultipleAccounts(List<Account> accounts) throws Exception {
+    private void createAccounts(List<Account> accounts) throws Exception {
         for(Account a : accounts){
             this.mockMvc.perform(post("/api/account/register")
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
