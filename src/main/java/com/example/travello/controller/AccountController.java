@@ -27,7 +27,8 @@ public class AccountController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<Account> createAccount(@RequestBody Account account){
 
-        if(account.getUsername().isEmpty() || account.getPassword().isEmpty() ){
+        if(account.getUsername().trim().equals("") ||  account.getUsername() == null ||
+                account.getPassword().trim().equals("") || account.getPassword() == null ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
