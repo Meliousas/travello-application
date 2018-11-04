@@ -2,6 +2,8 @@ package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
 import com.example.travello.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
+    static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     AccountService accountService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccounts(){
-        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+        List<Account> accounts = accountService.getAccounts();
+
+        logger.info("Requesting all accounts list: {} objects", accounts.size());
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -33,6 +39,8 @@ public class AccountController {
         }
 
         Account createdAccount = accountService.createAccount(account);
+
+        logger.info("Registering new user: {}", account);
         return new ResponseEntity<>(createdAccount, HttpStatus.OK);
     }
 
