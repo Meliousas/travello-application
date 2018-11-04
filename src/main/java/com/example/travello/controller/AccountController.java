@@ -50,6 +50,11 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        if(!accountService.getAccountsByUsername(account.getUsername()).isEmpty()){
+            logger.info("User registration failed due to username duplication");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Account createdAccount = accountService.createAccount(account);
 
         logger.info("Registering new user: {}", account);
