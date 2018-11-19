@@ -45,7 +45,8 @@ public class AccountController {
     public ResponseEntity<Account> createAccount(@RequestBody Account account){
 
         if(account.getUsername().trim().equals("") ||  account.getUsername() == null ||
-                account.getPassword().trim().equals("") || account.getPassword() == null ){
+                account.getPassword().trim().equals("") || account.getPassword() == null ||
+                  account.getEmail().trim().equals("") || account.getEmail() == null ){
             logger.info("User registration for {} failed due to bad credentials", account);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

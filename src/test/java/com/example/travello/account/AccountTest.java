@@ -31,7 +31,7 @@ public class AccountTest {
 
     @Test
     public void shouldCreateAccount() throws Exception {
-        Account account = new Account("user", "password");
+        Account account = new Account("user", "password","email", false);
 
         this.mockMvc
                 .perform(post("/api/account/register")
@@ -50,8 +50,8 @@ public class AccountTest {
 
     @Test
     public void shouldGetAllAccounts() throws Exception {
-        Account account = new Account("firstUser", "firstPass");
-        Account account2 = new Account("secondUser", "secondPass");
+        Account account = new Account("firstUser", "firstPass", "email", false);
+        Account account2 = new Account("secondUser", "secondPass","email", false);
 
         List<Account> accounts = Arrays.asList(account, account2);
         createAccounts(accounts);
