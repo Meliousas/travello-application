@@ -2,6 +2,7 @@ package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
 import com.example.travello.entity.Trip;
+import com.example.travello.entity.TripStatus;
 import com.example.travello.service.AccountService;
 import com.example.travello.service.TripService;
 import org.slf4j.Logger;
@@ -9,27 +10,98 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trip")
 public class TripController {
 
-    static Logger logger = LoggerFactory.getLogger(TripController.class);
+   private static Logger logger = LoggerFactory.getLogger(TripController.class);
 
     @Autowired
     TripService tripService;
+
+    @Autowired
+    AccountService accountService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Trip>> getAllTrips(){
         List<Trip> trips = tripService.getTrips();
 
-        logger.info("Requesting all trips list: {} objects", trips.size());
+        logger.info("Requesting all trips list: {} trips found", trips.size());
         return new ResponseEntity<>(trips, HttpStatus.OK);
     }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Trip> getTripById(@PathVariable Long id){
+        Optional<Trip> trip = tripService.getTripById(id);
+
+        if(!trip.isPresent()){
+            logger.info("Trip with id: {} not found", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            logger.info("Trip with id: {} found", id);
+            return new ResponseEntity<>(trip.get(), HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteTripById(@PathVariable Long id){
+        logger.info("Deleting trip with id: " + id);
+
+        Optional<Trip> trip = tripService.getTripById(id);
+
+        if (!trip.isPresent()) {
+            logger.info("Unable to delete. Trip with id: " + id + " not found");
+            return new ResponseEntity<Trip>(HttpStatus.NOT_FOUND);
+        }
+
+        tripService.deleteTrip(id);
+        return new ResponseEntity<>(trip.get(), HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/user/{id}/add", method = RequestMethod.POST)
+    public ResponseEntity<Trip> createTrip(@PathVariable long id, @RequestBody Trip trip){
+
+        Optional<Account> account = accountService.getAccountById(id);
+
+        if(!account.isPresent()){
+            logger.info("Trip creation failed. User does not exist.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Trip createdTrip = tripService.createTrip(trip);
+
+        logger.info("Trip with id: {} created for user: {}", trip.getId(), account.get().getUsername());
+        return new ResponseEntity<>(createdTrip, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Trip>> getTripsByOwnerId(@PathVariable Long userId){
+        List<Trip> trips = tripService.getTripsByOwnerId(userId);
+
+        logger.info("Requesting trips for user with id: {}. Found {} trips", userId, trips.size());
+        return new ResponseEntity<>(trips, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/status/{status}", method = RequestMethod.PUT)
+    public ResponseEntity<TripStatus> putTripStatus(@PathVariable long id, @PathVariable int status){
+        TripStatus tripStatus = tripService.changeTripStatus(id, status);
+
+        logger.info("Updating trip with id: {} with status: {}", id, status);
+        return new ResponseEntity<>(tripStatus, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/user/{id}/status/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Trip>> getUserTripsWithGivenStatus(@PathVariable long id, @PathVariable int status){
+        List<Trip> trips = tripService.getUserTripsByStatus(id, status);
+
+        logger.info("Requesting trips for user with id: {}, status: {}. {} trips found", id, status, trips.size());
+        return new ResponseEntity<>(trips, HttpStatus.OK);
+    }
+
 
 }

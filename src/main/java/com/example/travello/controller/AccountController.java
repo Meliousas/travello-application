@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
-    static Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     AccountService accountService;

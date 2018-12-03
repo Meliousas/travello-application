@@ -27,6 +27,10 @@ public class Trip {
     @NotNull
     private String title;
 
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private TripStatus status;
+
     private String description;
 
     @NotNull
@@ -34,8 +38,6 @@ public class Trip {
 
     @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.EAGER)
     private List<Card> cards;
-
-    private boolean isBlocked = false;
 
     private LocalDate startDate;
     private LocalDate endDate;

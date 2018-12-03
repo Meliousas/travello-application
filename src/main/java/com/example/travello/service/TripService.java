@@ -1,6 +1,7 @@
 package com.example.travello.service;
 
 import com.example.travello.entity.Trip;
+import com.example.travello.entity.TripStatus;
 import com.example.travello.repository.TripRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,23 @@ public class TripService {
 
     public Optional<Trip> getTripById(Long id){ return tripRepository.findById(id);}
 
-    public List<Trip> getTripsByTripOwner(Long id) {
-        return tripRepository.findByTripOwner(id);
+    public List<Trip> getTripsByOwnerId(Long id) {
+        return tripRepository.findTripByOwner(id);
     }
 
-    public Trip createAccount(Trip trip){
-        tripRepository.save(trip);
-        return trip;
+    public Trip createTrip(Trip trip){
+        return tripRepository.save(trip);
+    }
+
+    public TripStatus changeTripStatus(Long tripId, int status){
+       return tripRepository.updateTripStatus(tripId, status);
+    }
+
+    public void deleteTrip(Long id) {
+       tripRepository.deleteById(id);
+    }
+
+    public List<Trip> getUserTripsByStatus(long id, int status) {
+        return tripRepository.findByOwnerAndStatus(id, status);
     }
 }
