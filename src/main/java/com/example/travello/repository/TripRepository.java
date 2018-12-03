@@ -15,6 +15,6 @@ public interface TripRepository extends CrudRepository<Trip, Long> {
     @Query(value = "update trips set status = ?2 where id = ?1", nativeQuery = true)
     TripStatus updateTripStatus(Long tripId, int status);
 
-    @Query(value = "select * from trips t where t.id = ?1 and t.status = ?2", nativeQuery = true)
+    @Query(value = "select * from trips t where t.account_id = ?1 and t.status = ?2", nativeQuery = true)
     List<Trip> findByOwnerAndStatus(Long tripId, int status);
 }
