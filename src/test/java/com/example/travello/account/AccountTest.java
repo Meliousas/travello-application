@@ -56,7 +56,7 @@ public class AccountTest {
         List<Account> accounts = Arrays.asList(account, account2);
         createAccounts(accounts);
 
-        mockMvc.perform(get("/api/account/getAll"))
+        mockMvc.perform(get("/api/account/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }

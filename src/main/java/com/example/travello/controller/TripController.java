@@ -27,7 +27,7 @@ public class TripController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Trip>> getAllTrips(){
         List<Trip> trips = tripService.getTrips();
 

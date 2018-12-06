@@ -20,7 +20,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccounts(){
         List<Account> accounts = accountService.getAccounts();
 
@@ -40,6 +40,21 @@ public class AccountController {
             return new ResponseEntity<>(account.get(), HttpStatus.OK);
         }
     }
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAccountById(@PathVariable Long id){
+        logger.info("Deleting account with id: " + id);
+
+        Optional<Account> account = accountService.getAccountById(id);
+
+        if (!account.isPresent()) {
+            logger.info("Unable to delete. Account with id: " + id + " not found");
+            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+        }
+
+        accountService.deleteAccount(id);
+        return new ResponseEntity<>(account.get(), HttpStatus.NO_CONTENT);
+    }
+
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<Account> createAccount(@RequestBody Account account){
