@@ -1,6 +1,7 @@
 package com.example.travello.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "accounts")
 public class Account {
 
@@ -39,7 +41,5 @@ public class Account {
         this.isBusiness = isBusiness;
     }
 
-    //avoid test crush, junit bug
-    public Account() {}
 
 }
