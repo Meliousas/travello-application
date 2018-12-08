@@ -26,6 +26,7 @@ public class Account {
     private String photo;
     private String description;
 
+    @NotNull
     private boolean isAdmin;
 
     @NotNull
