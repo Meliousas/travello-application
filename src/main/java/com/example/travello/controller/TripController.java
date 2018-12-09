@@ -72,7 +72,7 @@ public class TripController {
             logger.info("Trip creation failed. User does not exist.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+        trip.setAccount(account.get());
         Trip createdTrip = tripService.createTrip(trip);
 
         logger.info("Trip with id: {} created for user: {}", trip.getId(), account.get().getUsername());
