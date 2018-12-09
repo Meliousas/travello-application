@@ -10,11 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -56,6 +57,9 @@ public class Trip {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
-    private List<String> countries;
+    @ElementCollection
+    @CollectionTable(name = "trip_countries", joinColumns = @JoinColumn(name = "trip_id"))
+    @Column(name = "country")
+    private Set<String> countries = new HashSet<>();
 
 }
