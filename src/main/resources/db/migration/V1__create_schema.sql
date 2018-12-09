@@ -2,7 +2,7 @@ create table public.accounts (
   id bigint primary key,
   description varchar(5000),
   email varchar(100) not null,
-  is_admin boolean not null,
+  is_admin boolean not null default false,
   is_business boolean not null,
   password varchar(255) not null,
   photo varchar(2000),
@@ -28,4 +28,5 @@ create table public.trips (
   description text,
   account_id bigint
 
+  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `Cart` (`cart_id`)
 );

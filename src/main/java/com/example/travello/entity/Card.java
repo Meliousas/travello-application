@@ -1,5 +1,6 @@
 package com.example.travello.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Card {
 
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Trip trip;
 
     @NotNull

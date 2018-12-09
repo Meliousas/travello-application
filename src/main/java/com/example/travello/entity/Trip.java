@@ -1,10 +1,12 @@
 package com.example.travello.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -24,6 +26,7 @@ public class Trip {
 
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Account account;
 
     @NotNull
