@@ -41,4 +41,8 @@ public class TripService {
     public List<Trip> getUserTripsByStatus(long id, int status) {
         return tripRepository.findByOwnerAndStatus(id, status);
     }
+
+    public Trip editTrip(Trip trip) {
+        return tripRepository.save(trip);
+    }
 }

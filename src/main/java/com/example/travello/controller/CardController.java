@@ -1,6 +1,7 @@
 package com.example.travello.controller;
 
 import com.example.travello.entity.Card;
+import com.example.travello.entity.Trip;
 import com.example.travello.service.CardService;
 import com.example.travello.service.TripService;
 import org.slf4j.Logger;
@@ -8,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +61,23 @@ public class CardController {
         cardService.deleteCardById(id);
         return new ResponseEntity<>(card.get(), HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping(value = "/trip/{id}/add", method = RequestMethod.POST)
+    public ResponseEntity<Card> createTrip(@PathVariable long id, @RequestBody Card card){
+
+        Optional<Trip> trip = tripService.getTripById(id);
+
+        if(!trip.isPresent()){
+            logger.info("Card creation failed. Trip does not exist.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        card.setTrip(trip.get());
+        Card createdCard = cardService.createCard(card);
+
+        logger.info("Card with id: {} created.", card.getId());
+        return new ResponseEntity<>(createdCard, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/trip/{tripId}", method = RequestMethod.GET)
     public ResponseEntity<List<Card>> getCardsForTrip(@PathVariable Long tripId){

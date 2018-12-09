@@ -1,9 +1,6 @@
 package com.example.travello.card;
 
-import com.example.travello.entity.Account;
-import com.example.travello.entity.Card;
-import com.example.travello.entity.Trip;
-import com.example.travello.entity.TripStatus;
+import com.example.travello.entity.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +27,7 @@ public class CardTest {
 
     @Test
     public void should_create_card_with_all_data() throws Exception {
-        Card card = new Card(0L, createTrip(), "title", "desc", LocalDate.now(), "IMG");
+        Card card = new Card(0L, createTrip(), "title", "desc", LocalDate.now(), "IMG", CardType.CARD);
         this.mockMvc
                 .perform(post("/api/card/add")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -40,7 +37,7 @@ public class CardTest {
 
     @Test
     public void should_create_card_with_only_title_and_trip() throws Exception{
-        Card card = new Card(1L, createTrip(), "title", null, null, null);
+        Card card = new Card(1L, createTrip(), "title", null, null, null, CardType.NOTE);
         this.mockMvc
                 .perform(post("/api/card/add")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)

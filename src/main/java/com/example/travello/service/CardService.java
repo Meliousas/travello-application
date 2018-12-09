@@ -30,4 +30,8 @@ public class CardService {
     public void deleteCardById(Long id) {
         cardRepository.deleteById(id);
     }
+
+    public Card createCard(Card card) {
+        return cardRepository.save(card);
+    }
 }

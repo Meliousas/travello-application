@@ -43,4 +43,8 @@ public class Card {
 
     private String photo;
 
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private CardType type;
+
 }

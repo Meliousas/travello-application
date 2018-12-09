@@ -103,5 +103,21 @@ public class TripController {
         return new ResponseEntity<>(trips, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Trip> editTrip(@PathVariable long id, @RequestBody Trip trip){
+
+        Optional<Trip> foundTrip = tripService.getTripById(id);
+        trip.setId(id);
+
+        if(!foundTrip.isPresent()){
+            logger.info("Trip with id: {} doesn't exist. Edit failed.", trip.getId());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Trip editedTrip = tripService.editTrip(trip);
+
+        logger.info("Trip with id: {} successfully edited.", trip.getId());
+        return new ResponseEntity<>(editedTrip, HttpStatus.OK);
+    }
 
 }
