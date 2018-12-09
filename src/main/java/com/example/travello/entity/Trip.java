@@ -56,4 +56,6 @@ public class Trip {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
+    private List<String> countries;
+
 }
