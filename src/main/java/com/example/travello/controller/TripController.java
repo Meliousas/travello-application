@@ -132,7 +132,7 @@ public class TripController {
       public ResponseEntity<Set<String>> getCountriesForTrip(@PathVariable long id){
         Set<String> countries = tripService.getCountriesForTrip(id);
 
-        logger.info("Requesting list of countries belonging to a trip. {} countries found", trips.size());
+        logger.info("Requesting list of countries belonging to a trip. {} countries found", countries.size());
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }                                 
 
