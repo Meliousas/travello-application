@@ -114,12 +114,13 @@ public class TripController {
         trip.setAccount(account.get());
        
         Optional<Trip> foundTrip = tripService.getTripById(id);
+        trip.setId(id);
         if(!foundTrip.isPresent()){
             Trip editedTrip = tripService.editTrip(trip);
             logger.info("Trip with id: {} doesn't exist. Creating new one.", trip.getId());
             return new ResponseEntity<>(editedTrip, HttpStatus.OK;
         }
-        trip.setId(id);
+       
 
         Trip editedTrip = tripService.editTrip(trip);
 
