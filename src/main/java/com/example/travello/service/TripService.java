@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TripService {
@@ -44,5 +45,9 @@ public class TripService {
 
     public Trip editTrip(Trip trip) {
         return tripRepository.save(trip);
+    }
+
+    public List<String> getCountriesForTrip(long id) {
+        return tripRepository.findCountriesForTrip(id);
     }
 }

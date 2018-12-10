@@ -118,7 +118,7 @@ public class TripController {
         if(!foundTrip.isPresent()){
             Trip editedTrip = tripService.editTrip(trip);
             logger.info("Trip with id: {} doesn't exist. Creating new one.", trip.getId());
-            return new ResponseEntity<>(editedTrip, HttpStatus.OK;
+            return new ResponseEntity<>(editedTrip, HttpStatus.OK);
         }
        
 
@@ -129,10 +129,10 @@ public class TripController {
     }
                                         
     @RequestMapping(value = "/{id}/countries", method = RequestMethod.GET)
-      public ResponseEntity<Set<String>> getCountriesForTrip(@PathVariable long id){
-        Set<String> countries = tripService.getCountriesForTrip(id);
+      public ResponseEntity<List<String>> getCountriesForTrip(@PathVariable long id){
+        List<String> countries = tripService.getCountriesForTrip(id);
 
-        logger.info("Requesting list of countries belonging to a trip. {} countries found", countries.size());
+        logger.info("Requesting list of countries for trip with id: {}. {} countries found", id, countries.size());
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }                                 
 
