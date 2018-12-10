@@ -110,8 +110,9 @@ public class TripController {
         trip.setId(id);
 
         if(!foundTrip.isPresent()){
-            logger.info("Trip with id: {} doesn't exist. Edit failed.", trip.getId());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Trip editedTrip = tripService.editTrip(trip);
+            logger.info("Trip with id: {} doesn't exist. Creating new one.", trip.getId());
+            return new ResponseEntity<>(editedTrip, HttpStatus.OK;
         }
 
         Trip editedTrip = tripService.editTrip(trip);
