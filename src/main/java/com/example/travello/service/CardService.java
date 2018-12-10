@@ -34,4 +34,12 @@ public class CardService {
     public Card createCard(Card card) {
         return cardRepository.save(card);
     }
+
+    public List<Card> getCardsTypeForTrip(Long tripId) {
+        return cardRepository.findByCardsType(tripId);
+    }
+
+    public List<Card> getNotesTypeForTrip(Long tripId) {
+        return cardRepository.findByNotesType(tripId);
+    }
 }

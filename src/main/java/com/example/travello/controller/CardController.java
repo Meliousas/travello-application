@@ -88,4 +88,22 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/trip/{tripId}/cards", method = RequestMethod.GET)
+    public ResponseEntity<List<Card>> getCardsTypeForTrip(@PathVariable Long tripId){
+
+        List<Card> cards = cardService.getCardsTypeForTrip(tripId);
+
+        logger.info("Requesting all cards for trip id: {}. {} cards found", cards.size());
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/trip/{tripId}/notes", method = RequestMethod.GET)
+    public ResponseEntity<List<Card>> getNotesTypeForTrip(@PathVariable Long tripId){
+
+        List<Card> cards = cardService.getNotesTypeForTrip(tripId);
+
+        logger.info("Requesting all notes for trip id: {}. {} notes found", cards.size());
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+    }
+
 }
