@@ -103,17 +103,23 @@ public class TripController {
         return new ResponseEntity<>(trips, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Trip> editTrip(@PathVariable long id, @RequestBody Trip trip){
+    @RequestMapping(value = "/user/{userId}/id/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Trip> editTrip(@PathVariable long userId, @PathVariable long id, @RequestBody Trip trip){
 
+        Optional<Account> account = accountService.getAccountById(userId);
+        if(!account.isPresent()){
+            logger.info("Trip creation failed. User does not exist.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        trip.setAccount(account.get());
+       
         Optional<Trip> foundTrip = tripService.getTripById(id);
-        trip.setId(id);
-
         if(!foundTrip.isPresent()){
             Trip editedTrip = tripService.editTrip(trip);
             logger.info("Trip with id: {} doesn't exist. Creating new one.", trip.getId());
             return new ResponseEntity<>(editedTrip, HttpStatus.OK;
         }
+        trip.setId(id);
 
         Trip editedTrip = tripService.editTrip(trip);
 
