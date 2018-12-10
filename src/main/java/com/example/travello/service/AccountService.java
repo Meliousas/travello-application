@@ -34,4 +34,8 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
+    public Account updateAccount(Long id, Account account) {
+        account.setId(id);
+        return accountRepository.save(account);
+    }
 }

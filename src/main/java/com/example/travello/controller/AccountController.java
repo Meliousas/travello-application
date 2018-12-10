@@ -1,6 +1,7 @@
 package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
+import com.example.travello.repository.AccountRepository;
 import com.example.travello.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,9 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccounts(){
@@ -75,6 +79,21 @@ public class AccountController {
 
         logger.info("Registering new user: {}", account);
         return new ResponseEntity<>(createdAccount, HttpStatus.OK);
+    }
+
+    @RequestMapping(value ="edit/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Account> editAccount(@PathVariable Long id, @RequestBody Account account){
+        Optional<Account> accountDb = accountRepository.findById(id);
+
+        if(!accountDb.isPresent()){
+            logger.info("User with id: {} does not exist. Editing failed.", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Account editedAccount = accountService.updateAccount(id, account);
+
+        logger.info("User with id: {} edited.", id);
+        return new ResponseEntity<>(editedAccount, HttpStatus.OK);
     }
 
 }
