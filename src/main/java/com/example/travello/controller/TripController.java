@@ -127,5 +127,13 @@ public class TripController {
         logger.info("Trip with id: {} successfully edited.", trip.getId());
         return new ResponseEntity<>(editedTrip, HttpStatus.OK);
     }
+                                        
+    @RequestMapping(value = "/{id}/countries", method = RequestMethod.GET)
+      public ResponseEntity<Set<String>> getCountriesForTrip(@PathVariable long id){
+        Set<String> countries = tripService.getCountriesForTrip(id);
+
+        logger.info("Requesting list of countries belonging to a trip. {} countries found", trips.size());
+        return new ResponseEntity<>(countries, HttpStatus.OK);
+    }                                 
 
 }
