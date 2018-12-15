@@ -27,7 +27,7 @@ public class AccountController {
 
     @GetMapping("/principal")
     public Principal user(Principal principal){
-        logger.info("Principal requested");
+        logger.info("Principal requested: {}", principal.getName());
         return principal;
     }
 

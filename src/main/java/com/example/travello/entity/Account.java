@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -35,11 +36,15 @@ public class Account {
     @OneToMany(targetEntity=Trip.class, mappedBy="account", fetch=FetchType.EAGER)
     private List<Trip> trips;
 
-    public Account(String username, String password, String email, boolean isBusiness) {
+    @OneToMany( cascade=CascadeType.ALL)
+    private List<Role> roles;
+
+    public Account(String username, String password, String email, boolean isBusiness, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.isBusiness = isBusiness;
+        this.roles = roles;
     }
 
 
