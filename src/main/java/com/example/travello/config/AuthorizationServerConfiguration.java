@@ -22,7 +22,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("my-trusted-client")
-                .secret("secret")
+                .secret("{noop}secret")
                 .authorizedGrantTypes("client_credentials", "password")
                 .scopes("read","write","trust")
                 .autoApprove(true);
