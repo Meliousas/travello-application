@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/trip")
@@ -88,11 +89,11 @@ public class TripController {
     }
 
     @RequestMapping(value = "/{id}/status/{status}", method = RequestMethod.PUT)
-    public ResponseEntity<TripStatus> putTripStatus(@PathVariable long id, @PathVariable int status){
-        TripStatus tripStatus = tripService.changeTripStatus(id, status);
+    public ResponseEntity<TripStatus> putTripStatus(@PathVariable Long id, @PathVariable int status){
+        tripService.changeTripStatus(id, status);
 
         logger.info("Updating trip with id: {} with status: {}", id, status);
-        return new ResponseEntity<>(tripStatus, HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}/status/{status}", method = RequestMethod.GET)
@@ -133,6 +134,15 @@ public class TripController {
 
         logger.info("Requesting list of countries for trip with id: {}. {} countries found", id, countries.size());
         return new ResponseEntity<>(countries, HttpStatus.OK);
-    }                                 
+    }
+//
+//    @RequestMapping(value = "/{id}/countries", method = RequestMethod.PUT)
+//    public ResponseEntity<List<String>> insertCountriesForTrip(@PathVariable long id,  @RequestBody Set<String> countries){
+//        List<String> countries = tripService.getCountriesForTrip(id);
+//
+//        logger.info("Requesting list of countries for trip with id: {}. {} countries found", id, countries.size());
+//        return new ResponseEntity<>(countries, HttpStatus.OK);
+//    }
+
 
 }

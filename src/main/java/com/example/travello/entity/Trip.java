@@ -62,4 +62,6 @@ public class Trip {
     @Column(name = "country")
     private Set<String> countries = new HashSet<>();
 
+    private String continent;
+
 }

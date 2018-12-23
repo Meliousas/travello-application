@@ -48,7 +48,7 @@ public class CardTest {
     private Trip createTrip(){
         return new Trip(0L, new Account(),"title", TripStatus.PRIVATE, null,
                 0.2, null,  LocalDate.now(),
-                LocalDate.now(),null );
+                LocalDate.now(),null,"america" );
     }
 
 
