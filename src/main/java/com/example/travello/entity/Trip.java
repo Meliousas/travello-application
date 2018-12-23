@@ -57,14 +57,15 @@ public class Trip {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(name = "trip_countries", joinColumns = @JoinColumn(name = "trip_id"))
     @Column(name = "country")
     private Set<String> countries = new HashSet<>();
 
     private String continent;
 
-    @JsonIgnore
+
+    @JsonProperty("countries")
     public Set<String> getCountries(){
         return countries;
     }
