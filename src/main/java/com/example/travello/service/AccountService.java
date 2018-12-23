@@ -21,8 +21,8 @@ public class AccountService {
 
     public Optional<Account> getAccountById(Long id){ return accountRepository.findById(id);}
 
-    public List<Account> getAccountsByUsername(String name) {
-        return accountRepository.findByUsername(name);
+    public Optional<Account> getAccountByUsername(String name) {
+        return Optional.ofNullable(accountRepository.findByUsername(name));
     }
 
     public Account createAccount(Account account){

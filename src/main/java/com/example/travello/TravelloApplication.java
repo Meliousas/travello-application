@@ -21,13 +21,13 @@ public class TravelloApplication {
 		SpringApplication.run(TravelloApplication.class, args);
 	}
 
-	@Autowired
-	public void authenticationManager(AuthenticationManagerBuilder builder, AccountRepository repo) throws Exception{
-//		Role role = new Role("USER");
-////		if(repo.count() == 0){
-////			repo.save(new Account("user","user","email",
-////					false, Arrays.asList(role)));
-////		}
-	//	builder.userDetailsService( s -> new CustomUserDetails(repo.findByUsername(s).get(0)));
-	}
+//	@Autowired
+//	public void authenticationManager(AuthenticationManagerBuilder builder, AccountRepository repo) throws Exception{
+////		Role role = new Role("USER");
+//////		if(repo.count() == 0){
+//////			repo.save(new Account("user","user","email",
+//////					false, Arrays.asList(role)));
+//////		}
+//		builder.userDetailsService( s -> new CustomUserDetails(repo.findByUsername(s));
+//	}
 }

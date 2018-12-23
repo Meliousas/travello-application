@@ -10,5 +10,5 @@ public interface AccountRepository  extends CrudRepository<Account, Long> {
 
     @Query( value = "select * from accounts a where a.username = ?1",
             nativeQuery = true)
-    List<Account> findByUsername(String name);
+    Account findByUsername(String name);
 }

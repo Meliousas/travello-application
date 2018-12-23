@@ -20,6 +20,8 @@ public class Role {
 
    @Id
    @GeneratedValue
+   Long id;
+
    String name;
 
    public Role(String name) {this.name=name;}

@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +28,11 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
 
+
     @GetMapping("/principal")
-    public Principal user(Principal principal){
+    public Collection<? extends GrantedAuthority> user(Authentication principal){
         logger.info("Principal requested: {}", principal.getName());
-        return principal;
+        return principal.getAuthorities();
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -77,7 +81,7 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(!accountService.getAccountsByUsername(account.getUsername()).isEmpty()){
+        if(accountService.getAccountByUsername(account.getUsername()).isPresent()){
             logger.info("User registration failed due to username duplication");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
