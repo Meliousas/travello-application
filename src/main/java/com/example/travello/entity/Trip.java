@@ -1,6 +1,7 @@
 package com.example.travello.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -57,11 +58,20 @@ public class Trip {
     private LocalDate endDate;
 
     @ElementCollection
-    @JsonIgnore
     @CollectionTable(name = "trip_countries", joinColumns = @JoinColumn(name = "trip_id"))
     @Column(name = "country")
     private Set<String> countries = new HashSet<>();
 
     private String continent;
+
+    @JsonIgnore
+    public Set<String> getCountries(){
+        return countries;
+    }
+
+    @JsonProperty("countries")
+    public void setCountries(Set<String> countries){
+        this.countries = countries;
+    }
 
 }
