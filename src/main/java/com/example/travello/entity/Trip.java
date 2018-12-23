@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "trips")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,12 +39,13 @@ public class Trip {
     @Enumerated(EnumType.ORDINAL)
     private TripStatus status;
 
+    @Column(columnDefinition = "varchar(8000)")
     private String description;
 
     @NotNull
     private double publicRating = 0.0;
 
-    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.EAGER)
+    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Card> cards;
 
     @JsonSerialize(using = ToStringSerializer.class)
@@ -58,6 +57,7 @@ public class Trip {
     private LocalDate endDate;
 
     @ElementCollection
+    @JsonIgnore
     @CollectionTable(name = "trip_countries", joinColumns = @JoinColumn(name = "trip_id"))
     @Column(name = "country")
     private Set<String> countries = new HashSet<>();

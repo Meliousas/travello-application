@@ -24,6 +24,8 @@ public class Account {
     private String email;
 
     private String photo;
+
+    @Column(columnDefinition = "varchar(8000)")
     private String description;
 
     @NotNull
