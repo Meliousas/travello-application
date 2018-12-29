@@ -20,9 +20,9 @@ public class CustomUserDetails implements UserDetails {
 
         List<GrantedAuthority> auths = new ArrayList<>();
 
-        for(Role role: account.getRoles()){
-            auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
-        }
+        auths.add(new SimpleGrantedAuthority("USER"));
+        if(account.isAdmin()) {auths.add(new SimpleGrantedAuthority("ADMIN"));}
+        if(account.isBusiness()) {auths.add(new SimpleGrantedAuthority("BUSINESS"));}
 
         this.authorities = auths;
     }

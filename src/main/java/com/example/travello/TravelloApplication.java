@@ -10,11 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Arrays;
 
 @SpringBootApplication
 @EnableConfigurationProperties
+@EnableTransactionManagement
 public class TravelloApplication {
 
 	public static void main(String[] args) {

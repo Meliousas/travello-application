@@ -36,17 +36,11 @@ public class Account {
     @OneToMany(targetEntity=Trip.class, mappedBy="account", fetch=FetchType.EAGER)
     private List<Trip> trips;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    private List<Role> roles;
-
-    public Account(String username, String password, String email, boolean isAdmin, boolean isBusiness, List<Role> roles) {
+    public Account(String username, String password, String email, boolean isAdmin, boolean isBusiness) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
         this.isBusiness = isBusiness;
-        this.roles = roles;
     }
-
-
 }
