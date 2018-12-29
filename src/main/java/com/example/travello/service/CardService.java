@@ -43,5 +43,5 @@ public class CardService {
         return cardRepository.findByNotesType(tripId);
     }
 
-    public Card editCard(Card card) { return this.cardRepository.save(card); }
+    public Card editCard(Card card) { return cardRepository.save(card); }
 }
