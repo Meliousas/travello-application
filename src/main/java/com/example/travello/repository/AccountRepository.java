@@ -13,4 +13,9 @@ public interface AccountRepository  extends CrudRepository<Account, Long> {
             nativeQuery = true)
     @Transactional
     Account findByUsername(String name);
+
+    @Query( value = "select * from accounts a where a.email = ?1",
+            nativeQuery = true)
+    @Transactional
+    Account findByEmail(String s);
 }
