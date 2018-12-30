@@ -10,12 +10,12 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
+    private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(Account account) {
-        this.username = account.getEmail();
+        this.email = account.getEmail();
         this.password = account.getPassword();
 
         List<GrantedAuthority> auths = new ArrayList<>();
@@ -39,7 +39,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

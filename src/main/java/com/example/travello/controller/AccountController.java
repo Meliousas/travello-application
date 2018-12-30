@@ -1,6 +1,7 @@
 package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
+import com.example.travello.entity.CustomUserDetails;
 import com.example.travello.repository.AccountRepository;
 import com.example.travello.service.AccountService;
 import org.slf4j.Logger;
@@ -8,12 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +24,6 @@ public class AccountController {
 
     @Autowired
     AccountRepository accountRepository;
-
-
-    @GetMapping("/principal")
-    public Collection<? extends GrantedAuthority> user(Authentication principal){
-        logger.info("Principal requested: {}", principal.getName());
-        return principal.getAuthorities();
-    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccounts(){
