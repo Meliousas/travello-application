@@ -106,4 +106,28 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/trip/{tripId}/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Card> editCard(@PathVariable long tripId, @PathVariable long id, @RequestBody Card card){
+
+        Optional<Card> foundCard = cardService.getCardById(id);
+        card.setId(id);
+
+        Optional<Trip> foundTrip = tripService.getTripById(tripId);
+        if(!foundTrip.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        card.setTrip(foundTrip.get());
+        if(!foundCard.isPresent()){
+            Card editedCard = cardService.createCard(card);
+            logger.info("Card with id: {} doesn't exist. Creating new one.", card.getId());
+            return new ResponseEntity<>(editedCard, HttpStatus.OK);
+        }
+
+        Card editedCard = cardService.editCard(card);
+
+        logger.info("Card with id: {} successfully edited.", card.getId());
+        return new ResponseEntity<>(editedCard, HttpStatus.OK);
+    }
+
 }

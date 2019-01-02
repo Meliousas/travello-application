@@ -42,4 +42,6 @@ public class CardService {
     public List<Card> getNotesTypeForTrip(Long tripId) {
         return cardRepository.findByNotesType(tripId);
     }
+
+    public Card editCard(Card card) { return cardRepository.save(card); }
 }

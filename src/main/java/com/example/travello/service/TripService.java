@@ -31,8 +31,8 @@ public class TripService {
         return tripRepository.save(trip);
     }
 
-    public TripStatus changeTripStatus(Long tripId, int status){
-       return tripRepository.updateTripStatus(tripId, status);
+    public void changeTripStatus(Long tripId, int status){
+       tripRepository.updateTripStatus(tripId, status);
     }
 
     public void deleteTrip(Long id) {

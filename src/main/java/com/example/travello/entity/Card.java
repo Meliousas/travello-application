@@ -27,7 +27,6 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JsonIgnore
     private Trip trip;
@@ -35,6 +34,7 @@ public class Card {
     @NotNull
     private String title;
 
+    @Column(columnDefinition = "varchar(8000)")
     private String description;
 
     @JsonSerialize(using = ToStringSerializer.class)

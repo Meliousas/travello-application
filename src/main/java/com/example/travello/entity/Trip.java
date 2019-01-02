@@ -1,14 +1,14 @@
 package com.example.travello.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "trips")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +27,6 @@ import java.util.Set;
 public class Trip {
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -41,12 +41,14 @@ public class Trip {
     @Enumerated(EnumType.ORDINAL)
     private TripStatus status;
 
+    @Column(columnDefinition = "varchar(8000)")
     private String description;
 
     @NotNull
     private double publicRating = 0.0;
 
-    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.EAGER)
+    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Card> cards;
 
     @JsonSerialize(using = ToStringSerializer.class)
@@ -57,9 +59,22 @@ public class Trip {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(name = "trip_countries", joinColumns = @JoinColumn(name = "trip_id"))
     @Column(name = "country")
     private Set<String> countries = new HashSet<>();
+
+    private String continent;
+
+
+    @JsonProperty("countries")
+    public Set<String> getCountries(){
+        return countries;
+    }
+
+    @JsonProperty("countries")
+    public void setCountries(Set<String> countries){
+        this.countries = countries;
+    }
 
 }
