@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,7 +27,6 @@ import java.util.Set;
 public class Trip {
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -46,7 +47,8 @@ public class Trip {
     @NotNull
     private double publicRating = 0.0;
 
-    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Card> cards;
 
     @JsonSerialize(using = ToStringSerializer.class)
