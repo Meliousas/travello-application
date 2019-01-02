@@ -1,7 +1,6 @@
 package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
-import com.example.travello.entity.CustomUserDetails;
 import com.example.travello.repository.AccountRepository;
 import com.example.travello.service.AccountService;
 import org.slf4j.Logger;

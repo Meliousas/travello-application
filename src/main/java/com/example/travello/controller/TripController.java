@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/trip")
@@ -135,14 +134,16 @@ public class TripController {
         logger.info("Requesting list of countries for trip with id: {}. {} countries found", id, countries.size());
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
-//
-//    @RequestMapping(value = "/{id}/countries", method = RequestMethod.PUT)
-//    public ResponseEntity<List<String>> insertCountriesForTrip(@PathVariable long id,  @RequestBody Set<String> countries){
-//        List<String> countries = tripService.getCountriesForTrip(id);
-//
-//        logger.info("Requesting list of countries for trip with id: {}. {} countries found", id, countries.size());
-//        return new ResponseEntity<>(countries, HttpStatus.OK);
-//    }
+
+    @RequestMapping(value = "/{id}/owner", method = RequestMethod.GET)
+    public ResponseEntity<Account> getTripOwner(@PathVariable long id){
+
+        Long accountId = tripService.getTripOwner(id);
+        Optional<Account> account = accountService.getAccountById(accountId);
+
+        logger.info("Requesting owner of a trip with id: {}", id);
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
+    }
 
 
 }
