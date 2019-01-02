@@ -13,10 +13,14 @@ public class CustomUserDetails implements UserDetails {
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    private Long userId;
+    private Boolean isAdmin;
+    private Boolean isBusiness;
 
     public CustomUserDetails(Account account) {
         this.email = account.getEmail();
         this.password = account.getPassword();
+        this.userId = account.getId();
 
         List<GrantedAuthority> auths = new ArrayList<>();
 
@@ -25,6 +29,8 @@ public class CustomUserDetails implements UserDetails {
         if(account.isBusiness()) {auths.add(new SimpleGrantedAuthority("BUSINESS"));}
 
         this.authorities = auths;
+        this.isAdmin = account.isAdmin();
+        this.isBusiness = account.isBusiness();
     }
 
     @Override
@@ -61,4 +67,17 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public Boolean getBusiness() {
+        return isBusiness;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
 }

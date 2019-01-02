@@ -25,6 +25,10 @@ public class AccountService {
         return Optional.ofNullable(accountRepository.findByUsername(name));
     }
 
+    public Optional<Account> getAccountByEmail(String name) {
+        return Optional.ofNullable(accountRepository.findByEmail(name));
+    }
+
     public Account createAccount(Account account){
         accountRepository.save(account);
         return account;

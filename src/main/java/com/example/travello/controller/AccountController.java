@@ -71,8 +71,9 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(accountService.getAccountByUsername(account.getUsername()).isPresent()){
-            logger.info("User registration failed due to username duplication");
+        if(accountService.getAccountByUsername(account.getUsername()).isPresent() ||
+                accountService.getAccountByEmail(account.getEmail()).isPresent()){
+            logger.info("User registration failed due to credentials duplication");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
