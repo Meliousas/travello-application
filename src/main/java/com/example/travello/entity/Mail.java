@@ -3,9 +3,6 @@ package com.example.travello.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-
-
 @Data
 @Builder
 public class Mail {

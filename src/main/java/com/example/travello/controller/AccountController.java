@@ -59,27 +59,30 @@ public class AccountController {
         return new ResponseEntity<>(account.get(), HttpStatus.NO_CONTENT);
     }
 
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<Account> createAccount(@RequestBody Account account){
+    public ResponseEntity createAccount(@RequestBody Account account){
 
         if(account.getUsername().trim().equals("") ||  account.getUsername() == null ||
                 account.getPassword().trim().equals("") || account.getPassword() == null ||
-                  account.getEmail().trim().equals("") || account.getEmail() == null ){
-            logger.info("User registration for {} failed due to bad credentials", account);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                account.getEmail().trim().equals("") || account.getEmail() == null ){
+            logger.info("User registration failed due to missing credentials");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing credentials");
         }
 
-        if(accountService.getAccountByUsername(account.getUsername()).isPresent() ||
-                accountService.getAccountByEmail(account.getEmail()).isPresent()){
-            logger.info("User registration failed due to credentials duplication");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(accountService.getAccountByUsername(account.getUsername()).isPresent()){
+            logger.info("User registration failed due to username duplication");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with given username already exists");
+        }
+
+        if(accountService.getAccountByEmail(account.getEmail()).isPresent()){
+            logger.info("User registration failed due to e-mail duplication");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with given e-mail address already exists");
         }
 
         Account createdAccount = accountService.createAccount(account);
 
-        logger.info("Registering new user: {}", account);
-        return new ResponseEntity<>(createdAccount, HttpStatus.OK);
+        logger.info("Registering new user: {}", createdAccount);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @RequestMapping(value ="edit/{id}", method = RequestMethod.PUT)

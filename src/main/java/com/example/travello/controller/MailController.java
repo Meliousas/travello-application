@@ -4,6 +4,7 @@ import com.example.travello.entity.Account;
 import com.example.travello.entity.Mail;
 import com.example.travello.entity.Trip;
 import com.example.travello.service.MailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,13 @@ public class MailController {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     private static Logger logger = LoggerFactory.getLogger(MailController.class);
 
     @RequestMapping(value = "/send", method = RequestMethod.PUT)
-    public ResponseEntity<Mail> sendMail(@RequestBody Mail mail){
+    public ResponseEntity sendMail(@RequestBody Mail mail){
 
         Mail mailData = mail;
 
@@ -35,10 +39,11 @@ public class MailController {
 
         if(success) {
             logger.info("Email with title: {} send from address {}", mail.getSubject(), mail.getMail());
-            return new ResponseEntity<>(mailData, HttpStatus.OK);
+            return ResponseEntity.ok().body("Message successfully sent");
         } else {
             logger.info("Error while sendind e-mail");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Sorry, we were unable to send your message. Please try again.");
         }
 
 
