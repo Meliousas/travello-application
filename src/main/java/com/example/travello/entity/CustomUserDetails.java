@@ -15,6 +15,7 @@ public class CustomUserDetails implements UserDetails {
     private Long userId;
     private Boolean isAdmin;
     private Boolean isBusiness;
+    private Boolean isActive;
 
     public CustomUserDetails(Account account) {
         this.email = account.getEmail();
@@ -29,6 +30,7 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = auths;
         this.isAdmin = account.isAdmin();
         this.isBusiness = account.isBusiness();
+        this.isActive = account.isActive();
     }
 
     @Override
@@ -51,7 +53,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isActive;
     }
 
     @Override

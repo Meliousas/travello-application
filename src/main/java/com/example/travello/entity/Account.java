@@ -34,14 +34,18 @@ public class Account {
     @NotNull
     private boolean isBusiness;
 
+    @NotNull
+    private boolean isActive;
+
     @OneToMany(targetEntity=Trip.class, mappedBy="account", fetch=FetchType.EAGER)
     private List<Trip> trips;
 
-    public Account(String username, String password, String email, boolean isAdmin, boolean isBusiness) {
+    public Account(String username, String password, String email, boolean isAdmin, boolean isBusiness, boolean isActive) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
         this.isBusiness = isBusiness;
+        this.isActive = isActive;
     }
 }

@@ -34,11 +34,10 @@ public boolean sendMail(Mail receivedMailData){
 
             InternetAddress[] address = InternetAddress.parse(to, true);
 
-            String formettedMail = receivedMailData.getMessage() + "/n Contact e-mail address: " + receivedMailData.getMail();
+            String formettedMail = receivedMailData.getMessage() + "/n Contact e-email address: " + receivedMailData.getEmail();
             mail.setRecipients(Message.RecipientType.TO, address);
             mail.setSubject("Travello App: Mail from: " + receivedMailData.getName() + " Subject: "+ receivedMailData.getSubject());
             mail.setSentDate(new Date());
-          //  mail.setHeader("XPriority", "1");
             mail.setText(formettedMail);
 
             Transport.send(mail);

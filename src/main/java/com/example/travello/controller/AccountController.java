@@ -66,17 +66,17 @@ public class AccountController {
                 account.getPassword().trim().equals("") || account.getPassword() == null ||
                 account.getEmail().trim().equals("") || account.getEmail() == null ){
             logger.info("User registration failed due to missing credentials");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing credentials");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("missing credentials");
         }
 
         if(accountService.getAccountByUsername(account.getUsername()).isPresent()){
             logger.info("User registration failed due to username duplication");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with given username already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("duplicate username");
         }
 
         if(accountService.getAccountByEmail(account.getEmail()).isPresent()){
-            logger.info("User registration failed due to e-mail duplication");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with given e-mail address already exists");
+            logger.info("User registration failed due to e-email duplication");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("duplicate e-email");
         }
 
         Account createdAccount = accountService.createAccount(account);
