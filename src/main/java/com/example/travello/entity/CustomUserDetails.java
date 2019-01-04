@@ -11,14 +11,16 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     private String email;
+    private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private Long userId;
     private Boolean isAdmin;
     private Boolean isBusiness;
-    private Boolean isActive;
+    private boolean isActive;
 
     public CustomUserDetails(Account account) {
         this.email = account.getEmail();
+        this.password = account.getPassword();
         this.userId = account.getId();
 
         List<GrantedAuthority> auths = new ArrayList<>();
@@ -39,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword() { return null; }
+    public String getPassword() { return password; }
 
     @Override
     public String getUsername() {
