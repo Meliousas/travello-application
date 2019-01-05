@@ -100,4 +100,19 @@ public class AccountController {
         return new ResponseEntity<>(editedAccount, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{id}/status/{isActive}", method = RequestMethod.PUT)
+    public ResponseEntity changeActiveStatus(@PathVariable long id, @PathVariable boolean isActive){
+        Optional<Account> accountDb = accountRepository.findById(id);
+
+        if(!accountDb.isPresent()){
+            logger.info("User with id: {} does not exist. Status update failed.", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        accountService.changeStatus(id, isActive);
+
+        logger.info("Changed status of user with id: {}", id);
+        return ResponseEntity.ok().build();
+    }
+
 }

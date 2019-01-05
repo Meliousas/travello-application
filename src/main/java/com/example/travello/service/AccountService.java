@@ -42,4 +42,8 @@ public class AccountService {
         account.setId(id);
         return accountRepository.save(account);
     }
+
+    public void changeStatus(long id, boolean status) {
+       accountRepository.updateStatus(id, status);
+    }
 }
