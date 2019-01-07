@@ -1,5 +1,5 @@
-insert into accounts (id, description,email,is_admin,is_business,password,photo,username)
-values (0, 'First admin', 'admin@admin.com', true, false, 'admin', null, 'grubas');
+insert into accounts (id, description,email, is_active, is_admin,is_business,password,photo,username)
+values (0, 'First admin', 'admin@admin.com', true, true, false, 'admin', null, 'grubas');
 insert into accounts (id, description,email,is_admin,is_business,password,photo,username)
 values (1, 'First traveller', 'traveller@email.com', false, false, 'traveller', null, 'grubas');
 insert into accounts (id, description,email,is_admin,is_business,password,photo,username)
