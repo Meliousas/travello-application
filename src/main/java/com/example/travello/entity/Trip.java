@@ -66,6 +66,7 @@ public class Trip {
 
     private String continent;
 
+    private boolean isBusiness;
 
     @JsonProperty("countries")
     public Set<String> getCountries(){

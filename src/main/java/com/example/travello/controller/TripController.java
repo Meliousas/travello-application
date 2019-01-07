@@ -73,6 +73,8 @@ public class TripController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         trip.setAccount(account.get());
+        trip.setBusiness(account.get().isBusiness());
+
         Trip createdTrip = tripService.createTrip(trip);
 
         logger.info("Trip with id: {} created for user: {}", trip.getId(), account.get().getUsername());
@@ -112,7 +114,8 @@ public class TripController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         trip.setAccount(account.get());
-       
+        trip.setBusiness(account.get().isBusiness());
+
         Optional<Trip> foundTrip = tripService.getTripById(id);
         trip.setId(id);
         if(!foundTrip.isPresent()){
