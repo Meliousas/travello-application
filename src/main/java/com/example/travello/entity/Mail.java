@@ -26,6 +26,8 @@ public class Mail {
 
     private Long tripId;
 
+    private int type;
+
     public Mail(String name, String email, String subject, String message) {
         this.name = name;
         this.email = email;
