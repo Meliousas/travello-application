@@ -68,10 +68,6 @@ public class Trip {
     private double sumRatings;
     private int sumVotes;
 
-    @JsonIgnore
-    @OneToMany
-    private Set<Rating> ratings;
-
     @JsonProperty("countries")
     public Set<String> getCountries(){
         return countries;
@@ -82,7 +78,4 @@ public class Trip {
         this.countries = countries;
     }
 
-    public void addRating(Rating rating) {
-        this.ratings.add(rating);
-    }
 }

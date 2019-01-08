@@ -1,5 +1,6 @@
 package com.example.travello.service;
 
+import com.example.travello.entity.Rating;
 import com.example.travello.entity.Trip;
 import com.example.travello.repository.TripRepository;
 import com.google.common.collect.Lists;

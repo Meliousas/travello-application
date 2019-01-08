@@ -173,7 +173,7 @@ public class TripController {
     }
 
     @RequestMapping(value = "/{tripId}/rating", method = RequestMethod.GET)
-    public ResponseEntity putTripRating(@PathVariable long tripId){
+    public ResponseEntity getTripRating(@PathVariable long tripId){
 
         Double rating = ratingService.getRating(tripId);
         logger.info("Rating for trip with id: {} is equal: {}", tripId, rating);
