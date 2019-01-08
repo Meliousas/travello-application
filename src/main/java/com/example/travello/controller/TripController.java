@@ -1,15 +1,18 @@
 package com.example.travello.controller;
 
 import com.example.travello.entity.Account;
+import com.example.travello.entity.CustomUserDetails;
 import com.example.travello.entity.Trip;
 import com.example.travello.entity.TripStatus;
 import com.example.travello.service.AccountService;
+import com.example.travello.service.RatingService;
 import com.example.travello.service.TripService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +26,9 @@ public class TripController {
 
     @Autowired
     TripService tripService;
+
+    @Autowired
+    RatingService ratingService;
 
     @Autowired
     AccountService accountService;
@@ -146,6 +152,41 @@ public class TripController {
 
         logger.info("Requesting owner of a trip with id: {}", id);
         return new ResponseEntity<>(account.get(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{tripId}/rate/{rate}", method = RequestMethod.PUT)
+    public ResponseEntity putTripRating(@PathVariable long tripId,  @PathVariable int rate){
+
+        CustomUserDetails principal = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = principal.getUserId();
+
+        Optional<Trip> trip = tripService.getTripById(tripId);
+        if(!trip.isPresent()){
+            logger.info("Trip with id: {} not found.", tripId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Double rating = ratingService.addRating(trip.get(), rate, userId);
+
+        logger.info("New rating for trip with id: {} is equal: {}", tripId, rating);
+        return ResponseEntity.status(HttpStatus.OK).body(rating);
+    }
+
+    @RequestMapping(value = "/{tripId}/rating", method = RequestMethod.GET)
+    public ResponseEntity putTripRating(@PathVariable long tripId){
+
+        Double rating = ratingService.getRating(tripId);
+        logger.info("Rating for trip with id: {} is equal: {}", tripId, rating);
+        return ResponseEntity.status(HttpStatus.OK).body(rating);
+
+    }
+
+    @RequestMapping(value = "/{tripId}/canVote", method = RequestMethod.GET)
+    public boolean canVote(@PathVariable long tripId) {
+        CustomUserDetails principal = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = principal.getUserId();
+
+       return ratingService.canVote(userId, tripId);
     }
 
 

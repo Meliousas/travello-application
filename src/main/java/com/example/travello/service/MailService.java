@@ -40,12 +40,9 @@ public class MailService {
                 }
 
                 Transport.send(mail);
-                System.out.println("Message sent");
                 return true;
             }   catch (MessagingException mex){
-                System.out.println("Unable to send message");
                 return false;
-
             }
 
     }
@@ -77,7 +74,7 @@ public class MailService {
         String to = travelloMail;
         InternetAddress[] address = InternetAddress.parse(to, true);
 
-        String formattedMail = receivedMail.getMessage() + "\n\n Contact e-email address: " + receivedMail.getEmail();
+        String formattedMail = receivedMail.getMessage() + "\n\n Contact e-mail address: " + receivedMail.getEmail();
         mail.setRecipients(Message.RecipientType.TO, address);
         mail.setSubject("[TRAVELLO BUSINESS] Mail from: " + receivedMail.getName() + ", Subject: "+ receivedMail.getSubject());
         mail.setSentDate(new Date());

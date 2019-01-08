@@ -44,9 +44,6 @@ public class Trip {
     @Column(columnDefinition = "varchar(8000)")
     private String description;
 
-    @NotNull
-    private double publicRating = 0.0;
-
     @OneToMany(targetEntity=Card.class, mappedBy="trip", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Card> cards;
@@ -68,6 +65,13 @@ public class Trip {
 
     private boolean isBusiness;
 
+    private double sumRatings;
+    private int sumVotes;
+
+    @JsonIgnore
+    @OneToMany
+    private Set<Rating> ratings;
+
     @JsonProperty("countries")
     public Set<String> getCountries(){
         return countries;
@@ -78,4 +82,7 @@ public class Trip {
         this.countries = countries;
     }
 
+    public void addRating(Rating rating) {
+        this.ratings.add(rating);
+    }
 }
