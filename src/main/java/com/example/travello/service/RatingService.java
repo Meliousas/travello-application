@@ -3,14 +3,14 @@ package com.example.travello.service;
 import com.example.travello.entity.Rating;
 import com.example.travello.entity.Trip;
 import com.example.travello.repository.RatingRepository;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 @Service
 public class RatingService {
@@ -53,9 +53,11 @@ public class RatingService {
             return true;
         }
 
-        return Stream.of(ratingIterable.spliterator(), false)
-                .anyMatch(Predicate.isEqual(ratingIterable.iterator().next().getUserId() == uId)
-                        .and(Predicate.isEqual(ratingIterable.iterator().next().getTripId() == tripId)));
+        List<Rating> ratings =  Lists.newArrayList(ratingIterable);
+        Optional<Rating> result =
+                ratings.stream().filter(obj -> obj.getUserId() == uId && obj.getTripId() == tripId).findFirst();
+
+        return !result.isPresent();
     }
 
 }
