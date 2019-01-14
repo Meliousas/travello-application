@@ -1,4 +1,4 @@
-//package com.example.travello.card;
+//package com.example.travello.trip.card;
 //
 //import com.example.travello.entity.*;
 //import org.junit.Before;

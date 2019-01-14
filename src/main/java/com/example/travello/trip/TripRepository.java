@@ -22,6 +22,6 @@ public interface TripRepository extends CrudRepository<Trip, Long> {
     @Query(value = "select country from trip_countries c where c.trip_id = ?1", nativeQuery = true)
     List<String> findCountriesForTrip(long id);
 
-    @Query(value = "select account_id from trips", nativeQuery = true)
+    @Query(value = "select account_id from trips t where t.id = ?1", nativeQuery = true)
     long retrieveTripOwnerId(long tripId);
 }
