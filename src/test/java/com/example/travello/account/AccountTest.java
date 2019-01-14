@@ -1,7 +1,7 @@
 //package com.example.travello.account;
 //
 //
-//import com.example.travello.entity.Account;
+//import com.example.travello.account.Account;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
