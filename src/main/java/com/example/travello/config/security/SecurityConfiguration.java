@@ -9,8 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @Configuration
@@ -26,9 +25,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         auth.parentAuthenticationManager(authenticationManagerBean())
                 .inMemoryAuthentication()
-                .passwordEncoder(encoder())
+                .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .withUser("user")
-                .password("user")
+                .password("{noop}user")
                 .roles("USER");
     }
 
@@ -37,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authProvider
                 = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(myUserDetailsService);
-        authProvider.setPasswordEncoder(encoder());
+        authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         return authProvider;
     }
 
@@ -48,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+//    @Bean
+//    public PasswordEncoder encoder() {
+//        return new BCryptPasswordEncoder(12);
+//    }
 
 }
