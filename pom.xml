@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<docker.image.prefix>travello</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -134,7 +135,18 @@
 				<!--<artifactId>flyway-maven-plugin</artifactId>-->
 				<!--<version>5.2.4</version>-->
 			<!--</plugin>-->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+
+
 
 </project>
