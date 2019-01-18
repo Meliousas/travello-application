@@ -47,7 +47,7 @@ public class AccountTest {
                 .perform(post("/api/account/register")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(asJsonString(account)))
-                        .andExpect(status().isCreated());
+                .andExpect(status().isCreated());
     }
 
     @Test
