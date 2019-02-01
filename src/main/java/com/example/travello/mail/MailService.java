@@ -25,7 +25,7 @@ public class MailService {
 
         Session session = Session.getInstance(settings, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("travello.contact@gmail.com","zaq1@WSX");
+                    return new PasswordAuthentication("travello.contact@gmail.com","X");
             }});
 
             try{
